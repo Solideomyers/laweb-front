@@ -1,10 +1,23 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { Banner, Breadcrumbs, NavBar } from "./components";
+import { useGoUp } from "./hooks";
 function App() {
-  console.log("Hola mundo");
+  const location = useLocation();
+  const goUp = useGoUp();
+  // console.log(location);
   return (
-    <>
-      <Outlet />
-    </>
+    <section>
+      <nav className="z-50 sticky top-0 flex flex-col gap-0">
+        <Banner />
+        <NavBar />
+      </nav>
+      <main className="grid">
+        {location.pathname !== "/" ? <Breadcrumbs /> : null}
+        <Outlet />
+      </main>
+      <footer></footer>
+      {goUp}
+    </section>
   );
 }
 export default App;
