@@ -1,0 +1,11 @@
+export { NavBar } from "./navbar/NavBar.tsx";
+export { Banner } from "./banner/Banner.tsx";
+export { Producto } from "./producto/Producto.tsx";
+export { Categoria } from "./categoria/Categoria.tsx";
+export { ProductoDetail } from "./producto/ProductoDetail.tsx";
+export { Notfound } from "./notfound/Notfound.tsx";
+export { Breadcrumbs } from "./breadcrumbs/Breadcrumbs.tsx";
+export { Categorias } from "./categoria/Categorias.tsx";
+export { PaginationUi } from "./pagination/PaginationUi.tsx";
+export { Loading } from "./loading/Loading.tsx";
+export { Productos } from "./producto/Productos.tsx";
