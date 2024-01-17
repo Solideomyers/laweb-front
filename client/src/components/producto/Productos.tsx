@@ -1,49 +1,39 @@
-import { Loading, PaginationUi, Producto } from "@/components";
-import { useGetCategoriasByIdQuery } from "@/redux";
-import { formatDescription } from "@/utils/formatDescription";
-import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-
-interface Product {
-  idp: number;
-  id_category: string;
-  proname: string;
-  attribute_price: number;
-  imagen: string;
-  createdAt: string;
-  updatedAt: string;
-  offer: boolean;
-  description: string;
-}
+import { PaginationUi, Producto, ProductosSk } from '@/components';
+import { formatDescription } from '@/utils/formatDescription';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useCategoriaId } from '@/hooks/query/useCategoriaId';
+import { Product } from '@/interfaces/categorias/interfaces-categorias';
 
 export const Productos: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const location = useLocation();
-  //   const id = location.pathname.split("/")[2];
-  const { data: categorias, isLoading, error } = useGetCategoriasByIdQuery(id);
-  const [isCat, setIsCat] = useState<Product[]>([]);
+  const { data: productos, isLoading, error } = useCategoriaId(id || '');
+
   useEffect(() => {
-    if (isLoading) {
-      console.log("cargando");
-    } else if (categorias) setIsCat(categorias?.data?.products_by_cat);
-    else if (isCat && isCat.length > perPage) {
-      setCurrentPage(1);
+    if (!isLoading) {
+      if (
+        productos?.data?.products_by_cat &&
+        productos?.data?.products_by_cat.length > perPage
+      ) {
+        setCurrentPage(1);
+      }
     }
-  }, []);
+  }, [productos, isLoading]);
 
   // paginacion
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(6);
-  const paginacion = Math?.ceil(isCat.length / perPage) || 1;
+  const paginacion =
+    Math?.ceil((productos?.data?.products_by_cat?.length || 0) / perPage) || 1;
   //
 
   return (
-    <section className="flex flex-col items-center">
-      <div className="grid grid-cols-1 grid-flow-auto place-items-center sm:grid-cols-3 md:grid-cols-3 gap-y-2 gap-x-1">
-        {isLoading ? (
-          <Loading />
+    <section className='flex flex-col items-center'>
+      <div className='grid grid-cols-1 grid-flow-auto place-content-center sm:grid-cols-3 md:grid-cols-3 gap-y-2 gap-x-1'>
+        {!productos?.data?.products_by_cat ? (
+          <ProductosSk />
         ) : (
-          isCat
+          productos?.data?.products_by_cat
             .slice(
               (currentPage - 1) * perPage,
               (currentPage - 1) * perPage + perPage
@@ -51,15 +41,18 @@ export const Productos: React.FC = () => {
             .map((cat: Product, i: number) => (
               <Producto
                 key={i}
-                id={id}
+                id_category={id || ''}
                 idp={cat.idp}
-                price={cat.attribute_price}
-                name={cat.proname}
+                id_o={cat.id_o}
+                cat_name={cat.cat_name}
+                attribute_price={cat.attribute_price}
+                proname={cat.proname}
                 offer={false}
                 description={formatDescription(cat.description)}
               />
             ))
         )}
+        {}
       </div>
       <PaginationUi
         totalPages={paginacion}
