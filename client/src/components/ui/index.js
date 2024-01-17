@@ -4,3 +4,8 @@ export { ButtonSecondary } from "./ButtonSecondary.tsx";
 export { Label } from "./Label.tsx";
 export { ComboBoxUi } from "./ComboBoxUi.tsx";
 export { CarouselUi } from "./Carousel.tsx";
+export { DropdownUi } from "./DropdownUi.tsx";
+export { FavoriteButton } from "./FavoriteButton.tsx";
+export { SocialIcons } from "./SocialIcons.tsx";
+export { Reviews } from "./Reviews.tsx";
+export { TooltipUi } from "./TooltipUi.tsx";
