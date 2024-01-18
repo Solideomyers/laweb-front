@@ -1,0 +1,19 @@
+name: Sync Repositories
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Ejecutar cada día a la medianoche
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Sync with Bitbucket
+      run: |
+        git remote add bitbucket https://fmyersdev@bitbucket.org/desarrollo-lawebes/lawebnew.git
+        git pull --no-edit bitbucket main
+        git push origin master
