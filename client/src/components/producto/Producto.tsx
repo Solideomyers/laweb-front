@@ -4,9 +4,9 @@ import { Button } from '../ui';
 import { Heart, ShoppingCart, MagnifyingGlass } from 'phosphor-react';
 import React from 'react';
 import img from '../../assets/herosection.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useProductContext } from '@/context/ProductContext';
-import { Product } from '@/interfaces/interfaces';
+import { Product } from '@/interfaces/categorias/interfaces-categorias';
 
 export const Producto: React.FC<Product> = ({
   attribute_price,
@@ -35,6 +35,12 @@ export const Producto: React.FC<Product> = ({
     console.log(cat_name);
     console.log('click');
     setProducts([...products, updateProduct]);
+  };
+
+  const navigate = useNavigate();
+  const handleRoute = (e: React.MouseEvent<HTMLButtonElement>) => {
+    navigate(`/categoria/${id_category}/producto/${idp}/${id_o}`);
+    e.preventDefault();
   };
 
   return (
@@ -74,14 +80,12 @@ export const Producto: React.FC<Product> = ({
               </span>
               Añadir
             </Button>
-            <Link to={`/categoria/${id_category}/producto/${idp}/${id_o}`}>
-              <Button variant={'secondary'}>
-                <span className='pr-2'>
-                  <MagnifyingGlass size={24} />
-                </span>
-                Detalle
-              </Button>
-            </Link>
+            <Button onClick={handleRoute} variant={'secondary'}>
+              <span className='pr-2'>
+                <MagnifyingGlass size={24} />
+              </span>
+              Detalle
+            </Button>
           </Card.Container>
         </Card.Container>
       </Card>

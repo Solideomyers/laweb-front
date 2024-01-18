@@ -1,19 +1,19 @@
 'use client';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import { Producto, ProductosSk } from 'components';
+import { Producto, ProductoSk } from 'components';
 import { useCategoriaId } from '@/hooks/query/useCategoriaId';
 
 const ProductoMemo = React.memo(Producto);
 
 export const ProductosSlide: React.FC = () => {
   const [isCatId, setIsCatId] = useState('1');
-  const { data: productos, isLoading, error } = useCategoriaId(isCatId);
+  const { categoriaIdQuery } = useCategoriaId(isCatId);
 
   const products = useMemo(() => {
-    return productos?.data?.products_by_cat?.slice(0, 10);
-  }, [productos, isLoading, error]);
+    return categoriaIdQuery?.data?.data?.products_by_cat?.slice(0, 10);
+  }, [categoriaIdQuery, categoriaIdQuery.isLoading, categoriaIdQuery.error]);
 
   //
   const items = useMemo(() => {
@@ -82,8 +82,14 @@ export const ProductosSlide: React.FC = () => {
           </li>
         </ul>
       </nav>
-      {!productos ? (
-        <ProductosSk />
+      {!categoriaIdQuery ? (
+        <div className='inline-flex overflow-hidden'>
+          {[1, 2, 3].map((item, i) => (
+            <div key={i} className='w-full inline-flex'>
+              <ProductoSk />
+            </div>
+          ))}
+        </div>
       ) : (
         <AliceCarousel
           items={items}

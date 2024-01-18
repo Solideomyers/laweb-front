@@ -46,9 +46,6 @@ export const SeccionDetailR: React.FC<ProductoProps> = ({
       </p>
       {/* medidas y color */}
       <div className=' flex mt-6 items-center justify-between  border-gray-100 mb-5'>
-        {/* color */}
-        {/* <DropdownUi title='Color' list={['S', 'M', 'L', 'XL']} /> */}
-        {/* medidas */}
         <DropdownUi
           selected={selected}
           setSelected={setSelected}

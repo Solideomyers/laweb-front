@@ -1,22 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
-
-interface DropdownUiProps {
-  atributos: Atributo[];
-  selected: Selected;
-  setSelected: React.Dispatch<React.SetStateAction<Selected>>;
-}
-
-interface Selected {
-  id_o: number;
-  attr_title: string;
-  attribute_price: number;
-  id_attr_name: number;
-}
-interface Atributo {
-  attr_title: string;
-}
+import { DropdownUiProps } from '@/interfaces/productos/interfaces-productos';
 
 export const DropdownUi: React.FC<DropdownUiProps> = ({
   atributos,
@@ -32,7 +17,7 @@ export const DropdownUi: React.FC<DropdownUiProps> = ({
         <div className='relative mt-1'>
           <Listbox.Button className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
             <span className='block truncate'>
-              {selected.attr_title.split('x').join('x')}
+              {selected?.attr_title?.split('x').join('x')}
             </span>
             <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
               <ChevronUpDownIcon
@@ -48,7 +33,7 @@ export const DropdownUi: React.FC<DropdownUiProps> = ({
             leaveTo='opacity-0'
           >
             <Listbox.Options className='absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm'>
-              {atributos.map((person, personIdx) => (
+              {atributos?.map((person, personIdx) => (
                 <Listbox.Option
                   key={personIdx}
                   className={({ active }) =>

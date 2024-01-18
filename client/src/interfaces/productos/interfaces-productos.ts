@@ -45,15 +45,21 @@ export interface ProductoDetailData {
   visible?: number;
   img: ProductoImg[];
   //   imgs: SlideImg[];
-  atributos: ProductoAtributo[];
+  atributos: ProductoAtributo[] | undefined;
   related: ProductoRelated[];
 }
 
 export interface Selected {
-  id_o: number;
-  attr_title: string;
-  attribute_price: number;
-  id_attr_name: number;
+  id_o: number | undefined;
+  attr_title: string | undefined;
+  attribute_price: string | undefined;
+  id_attr_name: number | undefined;
+}
+
+export interface DropdownUiProps {
+  atributos: Atributo[] | undefined;
+  selected: Selected | undefined;
+  setSelected: React.Dispatch<React.SetStateAction<Selected>>;
 }
 
 // ProductoDetail
@@ -62,17 +68,17 @@ export interface ProductoProps {
   proname: string;
   price: number;
   description: string;
-  atributos: Atributo[];
+  atributos: Atributo[] | undefined;
   imgs?: string[] | JSX.Element[];
-  selected: Selected;
-  setSelected: React.Dispatch<React.SetStateAction<Selected>>;
+  selected?: Selected;
+  setSelected?: React.Dispatch<React.SetStateAction<Selected | undefined>>;
 }
 
 export interface Atributo {
   attr_title: string;
-  attribute_price: number;
-  id_o: number;
-  id_attr_name: number;
+  attribute_price: string;
+  id_o: number | undefined;
+  id_attr_name: number | undefined;
 }
 
 export interface ProductoImg {
@@ -95,9 +101,9 @@ export interface ProductoImg {
 
 export interface ProductoAtributo {
   attr_title: string;
-  attribute_price: number;
-  id_o?: number;
-  id_attr_name?: number;
+  attribute_price: string;
+  id_o: number;
+  id_attr_name: number | undefined;
 }
 
 export interface ProductoTag {

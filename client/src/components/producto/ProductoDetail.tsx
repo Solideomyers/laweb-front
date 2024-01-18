@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SeccionDetailR } from './SeccionDetailR';
 import AliceCarousel from 'react-alice-carousel';
 import {
+  Atributo,
   ProductoProps,
   Selected,
 } from '@/interfaces/productos/interfaces-productos';
@@ -16,7 +17,9 @@ export const ProductoDetail: React.FC<ProductoProps> = ({
 }) => {
   const productosSort =
     atributos &&
-    atributos?.sort((a, b) => a.attribute_price - b.attribute_price);
+    atributos?.sort(
+      (a, b) => Number(a.attribute_price) - Number(b.attribute_price)
+    );
   const [selected, setSelected] = useState<Selected>(atributos[0]);
 
   return (
@@ -53,9 +56,9 @@ export const ProductoDetail: React.FC<ProductoProps> = ({
 
         {/* seccion derecha de la card */}
         <SeccionDetailR
-          atributos={productosSort}
+          atributos={productosSort as Atributo[] | []}
           proname={proname}
-          price={selected.attribute_price}
+          price={Number(selected?.attribute_price)}
           catName={catName}
           description={description}
           selected={selected}
