@@ -2,7 +2,7 @@ name: Sync Repositories
 
 on:
   schedule:
-    - cron: '13 13 * * *'  
+    - cron: '27 15 * * *'  
 
 jobs:
   sync:
@@ -14,6 +14,7 @@ jobs:
 
     - name: Sync with Bitbucket
       run: |
-        git remote add bitbucket https://fmyersdev@bitbucket.org/desarrollo-lawebes/lawebnew.git
+        git remote add bitbucket https://fmyersdev:${{ secrets.BITBUCKET_PASSWORD }}@bitbucket.org/desarrollo-lawebes/lawebnew.git
         git pull --no-edit bitbucket master
         git push origin master
+
