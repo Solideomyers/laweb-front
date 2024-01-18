@@ -2,7 +2,7 @@ name: Sync Repositories
 
 on:
   schedule:
-    - cron: '37 8 * * *'  # Ejecutar cada día a la medianoche
+    - cron: '39 8 * * *'  # Ejecutar cada día a la medianoche
 
 jobs:
   sync:
