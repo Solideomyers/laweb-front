@@ -15,7 +15,6 @@ export { Hero } from "./hero/Hero.tsx";
 export { CardHero } from "./hero/CardHero.tsx";
 export { ProductosSlide } from "./producto/ProductosSlide.tsx"
 export { ProductoSk } from "./skeleton/ProductoSk.tsx"
-export { ProductosSk } from './skeleton/ProductosSk.tsx';
 export { Testimonials } from "./testimonials/Testimonials.tsx"
 export { Testimonial } from "./testimonials/Testimonial.tsx"
 export { Footer } from "./footer/Footer.tsx"
