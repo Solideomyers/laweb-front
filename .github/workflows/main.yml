@@ -2,7 +2,7 @@ name: Sync Repositories
 
 on:
   schedule:
-    - cron: '8 13 * * *'  
+    - cron: '13 13 * * *'  
 
 jobs:
   sync:
