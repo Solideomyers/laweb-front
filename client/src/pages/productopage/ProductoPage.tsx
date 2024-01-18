@@ -5,12 +5,10 @@ import {
   ProductosRelated,
 } from '@/components';
 import { useFloatBtn } from '@/hooks';
-import { useCategoriaId } from '@/hooks/query/useCategoriaId';
 import { useProducto } from '@/hooks/query/useProducto';
-import { ProductoAtributo } from '@/interfaces/productos/interfaces-productos';
 
 import { formatDescription } from '@/utils/formatDescription';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { FaWhatsapp } from 'react-icons/fa6';
 import { useParams } from 'react-router-dom';
 
@@ -21,12 +19,8 @@ export const ProductoPage = React.memo(() => {
   }>();
 
   // Producto
-  const {
-    data: producto,
-    isLoading,
-    error,
-  } = useProducto(idp || '', ido || '');
-  console.log(producto?.data?.img);
+  const { productoQuery } = useProducto(idp || '', ido || '');
+
   // boton de whatsapp
   const goWsp = useFloatBtn({
     icon: <FaWhatsapp size={25} />,
@@ -36,12 +30,12 @@ export const ProductoPage = React.memo(() => {
   });
 
   const formattedDescription = useMemo(
-    () => formatDescription(producto?.data?.description || ''),
-    [producto?.data?.description]
+    () => formatDescription(productoQuery?.data?.data?.description || ''),
+    [productoQuery?.data?.data.description]
   );
 
   const imgs = useMemo(() => {
-    return producto?.data?.img?.slice(0, 4)?.map((item, i) => (
+    return productoQuery?.data?.data.img?.slice(0, 4)?.map((item, i) => (
       <div
         key={i}
         className='h-50 border border-gray-200 p-2 w-full max-w-content z-10 flex justify-center items-center rounded-3xl'
@@ -56,10 +50,10 @@ export const ProductoPage = React.memo(() => {
         />
       </div>
     ));
-  }, [producto]);
+  }, [productoQuery]);
 
   const relateProductos = useMemo(() => {
-    return producto?.data?.related?.map((item, i) => (
+    return productoQuery?.data?.data.related?.map((item, i) => (
       <div
         key={i}
         className='h-50 border border-gray-200 p-2 animate-pulse w-full max-w-content z-10 flex justify-center items-center rounded-3xl'
@@ -71,10 +65,10 @@ export const ProductoPage = React.memo(() => {
         />
       </div>
     ));
-  }, [producto]);
+  }, [productoQuery]);
 
   const renderContent = useCallback(() => {
-    if (isLoading) {
+    if (productoQuery.isLoading) {
       return (
         <div>
           <ProductoSk />
@@ -82,20 +76,22 @@ export const ProductoPage = React.memo(() => {
       );
     }
 
-    if (error) {
-      return <div>Error: {error.message}</div>;
+    if (productoQuery.error) {
+      return <div>Error: {productoQuery.error.message}</div>;
     }
 
-    console.log(producto?.data?.atributos);
-
+    console.log(productoQuery?.data?.data.atributos);
     return (
       <section className='grid grid-cols-1 place-items-center'>
         <ProductoDetail
-          atributos={producto?.data?.atributos as ProductoAtributo[]}
-          proname={producto?.data?.proname || ''}
-          catName={producto?.data?.cat_name || ''}
+          atributos={
+            productoQuery?.data?.data.atributos &&
+            productoQuery?.data?.data.atributos
+          }
+          proname={productoQuery?.data?.data.proname || ''}
+          catName={productoQuery?.data?.data.cat_name || ''}
           imgs={imgs}
-          price={Number(producto?.data?.attribute_price) || 0}
+          price={Number(productoQuery?.data?.data.attribute_price) || 0}
           description={formattedDescription}
         />
         <Accordeon title='Descripcion' description={formattedDescription} />
@@ -103,7 +99,12 @@ export const ProductoPage = React.memo(() => {
         {goWsp}
       </section>
     );
-  }, [isLoading, error, producto, formattedDescription]);
+  }, [
+    productoQuery.isLoading,
+    productoQuery.error,
+    productoQuery,
+    formattedDescription,
+  ]);
 
   return renderContent();
 });
