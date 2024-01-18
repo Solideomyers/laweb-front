@@ -10,25 +10,15 @@ export interface Product {
   id_category: string;
   proname: string;
   cat_name: string;
-  attribute_price: number;
+  attribute_price: string;
   description: string;
   file_name?: string;
   add_data?: string;
   categories?: string;
-  availability?: string;
   code?: string;
-  attribute_offer?: string;
-  tax?: string;
   price?: string;
-  minimun?: string;
   attribute_name?: number;
   attr_title?: string;
-  activo?: number;
-  marked?: number;
-  filter_body?: number;
-  active?: number;
-  as_filter?: number;
-  visible?: number;
   offer?: boolean;
 }
 
@@ -44,8 +34,8 @@ export interface ProductosRes {
 export interface Data {
   id: number;
   name: string;
-  meta_keywords?: string;
-  meta_description: string;
+  // meta_keywords?: string;
+  // meta_description?: string;
   products_by_cat: Product[];
 }
 
