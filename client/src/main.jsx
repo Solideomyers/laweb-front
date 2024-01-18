@@ -11,7 +11,7 @@ import { Breadcrumbs } from "components";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
         <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={ true} />
+          <ReactQueryDevtools initialIsOpen={ false} />
           <RouterProvider router={router}>
             <Breadcrumbs />
           </RouterProvider>
